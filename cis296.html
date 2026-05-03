@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tristan Lake CIS296 C# Projects</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Tristan Lake</a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="resume/TristanLakeResume.pdf">Resume</a>
+        <a href="CIS_Syllabi.html">CIS Syllabi</a>
+        <a href="projects.html">Projects</a>
+        <a href="cis296.html">C# Projects</a>
+        <a href="cis241.html">CIS241</a>
+        <a href="cis266.html">CIS266</a>
+        <a href="http://catalog.southeasttech.edu/preview_program.php?catoid=17&poid=2004&hl=%22programming%22" target="_blank">STI Program</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page-heading">
+      <h1>CIS296 - SportsPro Technical Support</h1>
+      <p>Documentation for my advanced C# / ASP.NET Core MVC project.</p>
+    </section>
+
+    <section class="card">
+      <h2>Project Description</h2>
+      <p>
+        SportsPro Technical Support is an ASP.NET Core MVC web application designed to manage
+        sports software support information. The application includes administrative pages for managing
+        products, technicians, customers, incidents, and registrations.
+      </p>
+
+      <p>
+        This project demonstrates MVC structure, model binding, view models, database-driven pages,
+        navigation, and Bootstrap-based layout. The screenshot below shows the main admin dashboard
+        with links to the major management sections.
+      </p>
+
+      <h2>Technologies Used</h2>
+      <ul>
+        <li>C#</li>
+        <li>ASP.NET Core MVC</li>
+        <li>Entity Framework Core</li>
+        <li>Bootstrap</li>
+        <li>Razor Views</li>
+        <li>SQL Server or SQLite</li>
+      </ul>
+
+      <h2>Screenshot</h2>
+      <img src="assets/img/Screenshot 2026-05-03 at 11.59.12 AM.png" alt="SportsPro Technical Support admin dashboard" class="project-img">
+
+      <h2>Sample Code</h2>
+      <p>
+        This view model is used when adding or editing incidents. It packages the incident data
+        together with lists of customers, products, and technicians so the Razor view can populate
+        dropdown menus.
+      </p>
+
+      <pre><code>namespace SportsPro.ViewModels
+{
+    public class IncidentAddEditViewModel
+    {
+        public List&lt;Customer&gt; Customers { get; set; } = new List&lt;Customer&gt;();
+        public List&lt;Product&gt; Products { get; set; } = new List&lt;Product&gt;();
+        public List&lt;Technician&gt; Technicians { get; set; } = new List&lt;Technician&gt;();
+
+        public Incident Incident { get; set; } = new Incident();
+
+        // "Add" or "Edit"
+        public string Action { get; set; } = "Add";
+    }
+}</code></pre>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Tristan Lake | Electronic Portfolio</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
