@@ -1,0 +1,60 @@
+@model IReadOnlyList<BankApp.Models.User>
+@{
+    ViewData["Title"] = "Manage Users";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <div class="card-title">Manage Users</div>
+            <div class="card-subtitle">Lock or unlock accounts and review their status.</div>
+        </div>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <p class="text-success">@TempData["Message"]</p>
+    }
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Locked?</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.Id</td>
+                <td>@u.Username</td>
+                <td>@u.Role</td>
+                <td>@(u.IsLocked ? "Yes" : "No")</td>
+                <td>
+                    @if (!u.IsLocked)
+                    {
+                        <form asp-action="LockUser" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="userId" value="@u.Id" />
+                            <button type="submit">Lock</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="UnlockUser" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="userId" value="@u.Id" />
+                            <button type="submit">Unlock</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

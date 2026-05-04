@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Bank App - @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="theme-dark">
+    <header>
+        <div class="header-inner">
+            <div class="brand">
+                <div class="brand-logo"></div>
+                <div>
+                    <div class="brand-text">Lake Bank</div>
+                    <div class="brand-sub">Secure Online Banking</div>
+                </div>
+            </div>
+
+            <nav>
+                <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="nav-link" asp-controller="Account" asp-action="Index">Account</a>
+                <a class="nav-link" asp-controller="Admin" asp-action="Index">Admin</a>
+
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <span class="nav-user">
+                        <span>Signed in as</span>
+                        <strong>@User.Identity!.Name</strong>
+                    </span>
+
+                    <form asp-controller="Auth" asp-action="Logout" method="post" style="display:inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="nav-logout">Logout</button>
+                    </form>
+                }
+                else
+                {
+                    <a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a>
+                    <a class="nav-link" asp-controller="Auth" asp-action="Register">Sign up</a>
+                }
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+
+    <div id="themeToggleFab" class="theme-toggle-fab">
+        <span class="theme-icon">🌙</span>
+    </div>
+
+    <script src="~/js/theme-toggle.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+
+

@@ -1,0 +1,40 @@
+@model BankApp.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <div class="card-title">Sign In</div>
+            <div class="card-subtitle">Use a demo account to access your dashboard.</div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <p class="text-error">@Model.ErrorMessage</p>
+    }
+
+    <form asp-action="Login" method="post">
+        @Html.AntiForgeryToken()
+        <div>
+            <label asp-for="Username"></label>
+            <input asp-for="Username" placeholder="username" />
+        </div>
+        <div>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" type="password" placeholder="password" />
+        </div>
+        <input type="hidden" asp-for="ReturnUrl" />
+        <button type="submit">Login</button>
+    </form>
+
+    <p style="margin-top:1rem;font-size:0.85rem;">
+        Demo users:
+        <br /> user / Password1! (Customer)
+        <br /> admin / AdminPass1! (Admin)
+    </p>
+</div>
+

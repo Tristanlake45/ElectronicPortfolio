@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <div class="card-title">Welcome to Lake Bank</div>
+            <div class="card-subtitle">
+                Modern, secure online banking built for my CIS 225 project
+            </div>
+        </div>
+    </div>
+
+    @if (User.Identity?.IsAuthenticated ?? false)
+    {
+        <p>You are logged in as <strong>@User.Identity!.Name</strong></p>
+        <p>Go to your <a asp-controller="Account" asp-action="Index" class="nav-link active">accounts</a></p>
+    }
+    else
+    {
+        <p>Please <a asp-controller="Auth" asp-action="Login" class="nav-link active">log in</a> to view your accounts</p>
+    }
+</div>

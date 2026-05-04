@@ -1,0 +1,41 @@
+@model BankApp.Models.TransferViewModel
+@{
+    ViewData["Title"] = "Transfer";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <div class="card-title">Transfer Funds</div>
+            <div class="card-subtitle">Move money between your accounts.</div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <p class="text-error">@Model.ErrorMessage</p>
+    }
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <p class="text-success">@Model.SuccessMessage</p>
+    }
+
+    <form asp-action="Transfer" method="post">
+        @Html.AntiForgeryToken()
+        <div>
+            <label>From account</label>
+            <select asp-for="FromAccountNumber" asp-items="Model.AccountOptions"></select>
+        </div>
+        <div>
+            <label>To account</label>
+            <select asp-for="ToAccountNumber" asp-items="Model.AccountOptions"></select>
+        </div>
+        <div>
+            <label>Amount</label>
+            <input asp-for="Amount" placeholder="100.00" />
+        </div>
+        <button type="submit">Submit transfer</button>
+    </form>
+</div>
+

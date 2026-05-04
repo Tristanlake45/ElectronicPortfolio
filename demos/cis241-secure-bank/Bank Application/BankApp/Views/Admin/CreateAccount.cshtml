@@ -1,0 +1,36 @@
+@model BankApp.Models.CreateAccountViewModel
+@{
+    ViewData["Title"] = "Create Account";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <div class="card-title">Create New Account</div>
+            <div class="card-subtitle">Admin-only: attach a new account to an existing user</div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <p class="text-error">@Model.ErrorMessage</p>
+    }
+
+    <form asp-action="CreateAccount" method="post">
+        @Html.AntiForgeryToken()
+        <div>
+            <label>Username (existing user)</label>
+            <input asp-for="Username" placeholder="user or admin" />
+        </div>
+        <div>
+            <label>Account number</label>
+            <input asp-for="AccountNumber" placeholder="e.g. CHK-2002" />
+        </div>
+        <div>
+            <label>Initial balance</label>
+            <input asp-for="InitialBalance" placeholder="0.00" />
+        </div>
+        <button type="submit">Create account</button>
+    </form>
+</div>

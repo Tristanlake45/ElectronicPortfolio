@@ -1,0 +1,87 @@
+@model BankApp.Models.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <div class="card-title">Admin Dashboard</div>
+            <div class="card-subtitle">High-risk operations, account requests, and audit trail.</div>
+        </div>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <p class="text-success">@TempData["Message"]</p>
+    }
+
+    <!-- Manage users link -->
+    <p>
+        <a asp-action="ManageUsers" class="nav-link active">Manage users</a>
+    </p>
+
+    <!-- Section 1: Pending account requests -->
+    <section style="margin-top: 1rem; margin-bottom: 2rem;">
+        <h3>Pending Account Requests</h3>
+        @if (!Model.PendingRequests.Any())
+        {
+            <p class="card-subtitle">No pending requests.</p>
+        }
+        else
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request Id</th>
+                        <th>User</th>
+                        <th>Type</th>
+                        <th>Requested</th>
+                        <th>Approve</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var r in Model.PendingRequests)
+                {
+                    <tr>
+                        <td>@r.Id</td>
+                        <td>@r.User.Username</td>
+                        <td>@r.RequestedAccountType</td>
+                        <td>@r.RequestedAt.ToLocalTime()</td>
+                        <td>
+                            <form asp-action="ApproveRequest" method="post" style="display:flex; gap:0.3rem; align-items:center;">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="requestId" value="@r.Id" />
+                                <input type="text" name="accountNumber" placeholder="e.g. CHK-3001" />
+                                <input type="number" step="0.01" name="initialBalance" placeholder="0.00" />
+                                <button type="submit">Approve</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+    </section>
+
+    <hr style="margin: 1rem 0;" />
+
+    <!-- Section 2: Admin audit log -->
+    <section style="margin-top: 1rem;">
+        <h3>Recent Admin Audit Log</h3>
+        @if (!Model.AuditLines.Any())
+        {
+            <p class="card-subtitle">No admin actions logged yet.</p>
+        }
+        else
+        {
+            <ul style="padding-left:1.1rem;">
+                @foreach (var entry in Model.AuditLines)
+                {
+                    <li style="margin-bottom:0.2rem;font-size:0.86rem;">@entry</li>
+                }
+            </ul>
+        }
+    </section>
+</div>

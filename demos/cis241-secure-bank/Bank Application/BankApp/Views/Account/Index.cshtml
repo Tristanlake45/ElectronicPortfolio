@@ -1,0 +1,50 @@
+@model IEnumerable<BankApp.Models.Account>
+@{
+    ViewData["Title"] = "Accounts";
+    Layout = "_Layout";
+}
+@if (TempData["Message"] != null)
+{
+    <p class="text-success">@TempData["Message"]</p>
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <div class="card-title">Your Accounts</div>
+            <div class="card-subtitle">Balances and quick actions.</div>
+            <p>
+                <a asp-action="RequestAccount" class="nav-link active">Request a new account</a>
+            </p>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Account</th>
+                <th>Balance</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var acct in Model)
+        {
+            <tr>
+                <td>@acct.AccountNumber</td>
+                <td>@acct.Balance.ToString("C")</td>
+                <td>
+                    <a asp-controller="Account"
+                       asp-action="Transfer"
+                       asp-route-fromAccount="@acct.AccountNumber"
+                       class="nav-link">
+                        Transfer
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+

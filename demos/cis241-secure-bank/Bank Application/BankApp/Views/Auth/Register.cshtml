@@ -1,0 +1,36 @@
+@model BankApp.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <div class="card-title">Create an Account</div>
+            <div class="card-subtitle">Register as a banking user.</div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <p class="text-error">@Model.ErrorMessage</p>
+    }
+
+    <form asp-action="Register" method="post">
+        @Html.AntiForgeryToken()
+        <div>
+            <label asp-for="Username"></label>
+            <input asp-for="Username" placeholder="username" />
+        </div>
+        <div>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" type="password" />
+        </div>
+        <div>
+            <label asp-for="ConfirmPassword"></label>
+            <input asp-for="ConfirmPassword" type="password" />
+        </div>
+        <button type="submit">Sign up</button>
+    </form>
+</div>

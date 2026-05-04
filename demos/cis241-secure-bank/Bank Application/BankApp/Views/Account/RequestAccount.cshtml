@@ -1,0 +1,36 @@
+@model BankApp.Models.AccountRequestViewModel
+@{
+    ViewData["Title"] = "Request Account";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <div class="card-title">Request a New Account</div>
+            <div class="card-subtitle">Submit a request for an additional bank account</div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <p class="text-error">@Model.ErrorMessage</p>
+    }
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <p class="text-success">@Model.SuccessMessage</p>
+    }
+
+    <form asp-action="RequestAccount" method="post">
+        @Html.AntiForgeryToken()
+        <div>
+            <label>Account type</label>
+            <input asp-for="RequestedAccountType" placeholder="e.g. Checking, Savings" />
+        </div>
+        <div>
+            <label>Notes (optional)</label>
+            <input asp-for="Notes" placeholder="Any additional details" />
+        </div>
+        <button type="submit">Submit request</button>
+    </form>
+</div>
